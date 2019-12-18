@@ -17,14 +17,14 @@ class MedicaoController extends Controller
 
 	public function index()
     {
-    	return response()->json($this->medicao);
+    	return response()->json($this->medicao->all());
     }
 
 	public function show($id)
     {
     	$medicao = $this->medicao->find($id);
 
-    	if(! $medicao) return response()->json(ApiError::errorMessage('medição não encontrada', 4040), 404);
+    	if(! $medicao) return response()->json(['data' => ['msg' => 'achou N']], 404);
 
     	$data = ['data' => $medicao];
 	    return response()->json($data);
@@ -32,6 +32,7 @@ class MedicaoController extends Controller
 
     public function store(Request $request)
     {
+    	//return response()->json(['data' => ['msg' => 'medidor cadastrado com sucesso!']], 201);
 		try {
 
 			$medicaoData = $request->all();
@@ -42,9 +43,9 @@ class MedicaoController extends Controller
 
 		} catch (\Exception $e) {
 			if(config('app.debug')) {
-				return response()->json(ApiError::errorMessage($e->getMessage(), 1010), 500);
+				return response()->json(['data' => ['msg' => 'Deu MUITO RUIM, TROUXA!']], 500);
 			}
-			return response()->json(ApiError::errorMessage('Deu ruim!', 1010),  500);
+			return response()->json(['data' => ['msg' => 'Deu MUITO RUIM']],  500);
 		}
     }
 
@@ -61,9 +62,9 @@ class MedicaoController extends Controller
 
 		} catch (\Exception $e) {
 			if(config('app.debug')) {
-				return response()->json(ApiError::errorMessage($e->getMessage(), 1011),  500);
+				return response()->json(['data' => ['msg' => 'DEU ERRADO!']],  500);
 			}
-			return response()->json(ApiError::errorMessage('Deu ruim ao atualizar', 1011), 500);
+			return response()->json(['data' => ['msg' => 'Atualizou não, boy']], 500);
 		}
 	}
 
@@ -76,9 +77,9 @@ class MedicaoController extends Controller
 
 		}catch (\Exception $e) {
 			if(config('app.debug')) {
-				return response()->json(ApiError::errorMessage($e->getMessage(), 1012),  500);
+				return response()->json(['data' => ['msg' => 'Tenho duas palavras pra tu']],  500);
 			}
-			return response()->json(ApiError::errorMessage('parabéns, foi removido', 1012),  500);
+			return response()->json(['data' => ['msg' => 'PARA BENS!']],  500);
 		}
 	}
     //
