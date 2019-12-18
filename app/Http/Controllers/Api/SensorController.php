@@ -17,7 +17,7 @@ class SensorController extends Controller
 
 	public function index()
     {
-    	return response()->json($this->sensor);
+    	return response()->json($this->sensor->all());
     	//return response()->json(['data'=>['msg' =>'isso ai deu ruim']], 500);
     }
 
@@ -25,7 +25,7 @@ class SensorController extends Controller
     {
     	$sensor = $this->sensor->find($id);
 
-    	if(! $sensor) return response()->json(ApiError::errorMessage('Sensor não encontrado', 4040), 404);
+    	if(! $sensor) return response()->json(['data' => ['msg' => 'Deu MUITO RUIM, TROUXA!']], 404);
 
     	$data = ['data' => $sensor];
 	    return response()->json($data);
@@ -43,9 +43,9 @@ class SensorController extends Controller
 
 		} catch (\Exception $e) {
 			if(config('app.debug')) {
-				return response()->json(ApiError::errorMessage($e->getMessage(), 1010), 500);
+				return response()->json( ['data' => ['msg' => 'Sensor cadastrado com sucesso!']], 500);
 			}
-			return response()->json(ApiError::errorMessage('Deu ruim!', 1010),  500);
+			return response()->json( ['data' => ['msg' => 'Sensor cadastrado com sucesso!']], 500);
 		}
     }
 
@@ -62,9 +62,9 @@ class SensorController extends Controller
 
 		} catch (\Exception $e) {
 			if(config('app.debug')) {
-				return response()->json(ApiError::errorMessage($e->getMessage(), 1011),  500);
+				return response()->json(['data' => ['msg' => 'DEU merda com o sucesso!']],  500);
 			}
-			return response()->json(ApiError::errorMessage('Deu ruim ao atualizar', 1011), 500);
+			return response()->json(['data' => ['msg' => 'DEu uma merda federal!']], 500);
 		}
 	}
 
